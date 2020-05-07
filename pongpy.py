@@ -5,14 +5,22 @@ import random
 def ballScript():
     global ball_speed_x
     global ball_speed_y
+    global robot_score
+    global player_score
+
+
     ball.x += ball_speed_x
     ball.y += ball_speed_y
 
     if ball.top <= 0 or ball.bottom >= screen_height:
         ball_speed_y *= -1
     
-    if ball.left <= 0 or ball.right >= screen_width:   
+    if ball.left <= 0:
+        player_score += 1
+        restart()  
+    if ball.right >= screen_width:   
         restart()
+        robot_score += 1
     
     if ball.colliderect(player)  or ball.colliderect(robot):
         ball_speed_x *= -1
@@ -66,6 +74,11 @@ ball_speed_x = 8 * random.choice((1,-1))
 ball_speed_y = 8 * random.choice((1,-1))
 velocity = 0
 rvelocity = 0
+player_score = 0
+robot_score = 0
+
+font = pygame.font.Font("freesansbold.ttf",40)
+
 # Game Rectangles
 ball = pygame.Rect(screen_width / 2 - 15, screen_height / 2 - 15, 20, 20)
 player = pygame.Rect(screen_width - 20, screen_height / 2 - 70, 10,140)
@@ -108,6 +121,16 @@ while True:
     pygame.draw.rect(screen,light_grey,player)
     pygame.draw.rect(screen,light_grey,robot)
     pygame.draw.ellipse(screen,light_grey,ball)
+
+    p_text = font.render(f"{player_score}",False,light_grey)
+    screen.blit(p_text,(640,40))
+
+
+    p_text = font.render(f"{robot_score}",False,light_grey)
+    screen.blit(p_text,(340,40))
+
+
+
 
     pygame.display.flip()
     colock.tick(60)
