@@ -25,7 +25,7 @@ def restart():
     ball_speed_x *= random.choice((1,-1))
 
 
-def player():
+def player_task():
 
     player.y += velocity
 
@@ -35,7 +35,7 @@ def player():
         player.bottom = screen_height
 
 
-def robot():
+def robot_task():
     robot.y += rvelocity
 
     if robot.top <= 0:
@@ -99,8 +99,8 @@ while True:
     
     
     ballScript()
-    player()
-    robot()
+    player_task()
+    robot_task()
     
     player.y +=velocity
     robot.y += rvelocity
